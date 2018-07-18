@@ -126,7 +126,9 @@ class MapViewDirections extends Component {
 		return fetch(url)
 			.then(response => response.json())
 			.then(json => {
-
+				if (json.status === 'ZERO_RESULTS') {
+					return Promise.reject('ZERO_RESULTS');
+				}
 				if (json.status !== 'OK') {
 					const errorMessage = json.error_message || 'Unknown error';
 					return Promise.reject(errorMessage);
